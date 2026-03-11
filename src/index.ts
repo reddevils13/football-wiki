@@ -49,7 +49,7 @@ app.get('/players', async (req: Request, res: Response) => {
 
 app.get('/teams', async (req: Request, res: Response) => {
   try {
-    const teams = await teamService.getAllTeams();
+    const teams = await teamService.getTeamsWithPlayers();
     res.json(teams);
   } catch (error: unknown) {
     res.status(500).json({ error: getErrorMessage(error) });

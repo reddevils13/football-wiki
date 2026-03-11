@@ -20,6 +20,10 @@ export class TeamService {
     return this.teamRepository.findAll();
   }
 
+  async getTeamsWithPlayers(): Promise<Team[]> {
+    return this.teamRepository.findTeamsWithPlayers();
+  }
+
   async updateTeam(id: string, data: UpdateTeamDTO): Promise<Team | null> {
     const team = await this.teamRepository.findById(id);
     if (isNil(team)) {

@@ -25,6 +25,13 @@ export class TeamRepository {
     return this.db(this.tableName).select('*');
   }
 
+  async findTeamsWithPlayers(): Promise<Team[]> {
+    return this.db(this.tableName)
+      .distinct(`${this.tableName}.*`)
+      .join('playerCareer', `${this.tableName}.id`, 'playerCareer.teamId')
+      .orderBy(`${this.tableName}.teamName`, 'asc');
+  }
+
   async update(id: string, data: UpdateTeamDTO): Promise<Team | null> {
     await this.db(this.tableName).where({ id }).update(data);
     return this.findById(id);
