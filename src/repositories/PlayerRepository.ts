@@ -47,6 +47,15 @@ export class PlayerRepository {
     return player || null;
   }
 
+  async getRandomPlayerByLevel(level: string): Promise<Player | null> {
+    const player = await this.db(this.tableName)
+      .where({ level: level.toUpperCase() })
+      .orderByRaw('RAND()')
+      .limit(1)
+      .first();
+    return player || null;
+  }
+
   async getPlayerCount(): Promise<number> {
     const result = await this.db(this.tableName).count('id as count').first();
     return result ? Number(result.count) : 0;

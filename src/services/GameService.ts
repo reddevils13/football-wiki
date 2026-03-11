@@ -13,9 +13,11 @@ export class GameService {
     private playerCareerRepository: PlayerCareerRepository
   ) {}
 
-  async createRandomGame(): Promise<GameWithCareerResponse> {
-    // Optimized: Get one random player directly from DB instead of fetching all 534 players
-    const randomPlayer = await this.playerRepository.getRandomPlayer();
+  async createRandomGame(level?: string): Promise<GameWithCareerResponse> {
+    // Get one random player by level (if specified) directly from DB
+    const randomPlayer = level 
+      ? await this.playerRepository.getRandomPlayerByLevel(level)
+      : await this.playerRepository.getRandomPlayer();
     
     if (isNil(randomPlayer)) {
       throw new Error('No players available to create a game');

@@ -89,7 +89,7 @@ async function seedDatabase() {
   console.log('🌱 Starting database seed...\n');
 
   try {
-    const csvPath = path.resolve(__dirname, '../../data/football-wiki.csv');
+    const csvPath = path.resolve(__dirname, '../../data/football wiki-data 2.0.csv');
     
     console.log('📖 Reading CSV file...');
     const data = await parseCSV(csvPath);

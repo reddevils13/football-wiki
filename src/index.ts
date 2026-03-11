@@ -77,7 +77,8 @@ app.post('/leagues', async (req: Request, res: Response) => {
 
 app.post('/games', async (req: Request, res: Response) => {
   try {
-    const gameWithCareer = await gameService.createRandomGame();
+    const level = req.body?.level;
+    const gameWithCareer = await gameService.createRandomGame(level);
     res.status(201).json(gameWithCareer);
   } catch (error: unknown) {
     res.status(400).json({ error: getErrorMessage(error) });
