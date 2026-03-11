@@ -47,6 +47,15 @@ app.get('/players', async (req: Request, res: Response) => {
   }
 });
 
+app.get('/teams', async (req: Request, res: Response) => {
+  try {
+    const teams = await teamService.getAllTeams();
+    res.json(teams);
+  } catch (error: unknown) {
+    res.status(500).json({ error: getErrorMessage(error) });
+  }
+});
+
 app.post('/players', async (req: Request, res: Response) => {
   try {
     const player = await playerService.createPlayer(req.body);
@@ -78,7 +87,8 @@ app.post('/leagues', async (req: Request, res: Response) => {
 app.post('/games', async (req: Request, res: Response) => {
   try {
     const level = req.body?.level;
-    const gameWithCareer = await gameService.createRandomGame(level);
+    const teamId = req.body?.teamId;
+    const gameWithCareer = await gameService.createRandomGame(level, teamId);
     res.status(201).json(gameWithCareer);
   } catch (error: unknown) {
     res.status(400).json({ error: getErrorMessage(error) });
