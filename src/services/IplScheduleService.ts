@@ -56,6 +56,9 @@ export class IplScheduleService {
       throw new Error('Schedule not found');
     }
 
+    if (data.betBy && isEmpty(trim(data.betBy))) {
+      throw new Error('betBy cannot be empty');
+    }
     if (data.betAt && isEmpty(trim(data.betAt))) {
       throw new Error('betAt cannot be empty');
     }

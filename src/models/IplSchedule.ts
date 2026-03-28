@@ -29,6 +29,7 @@ export interface UpdateIplScheduleDTO {
 }
 
 export interface PatchIplScheduleDTO {
+  betBy?: string; // Person who is betting
   betAt?: string; // Team name that person is betting on
   wonBy?: string; // Winner team name
 }
