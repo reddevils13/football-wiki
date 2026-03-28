@@ -7,7 +7,8 @@ import {
   teamService, 
   leagueService, 
   playerCareerService, 
-  gameService 
+  gameService,
+  iplScheduleService
 } from './container';
 
 dotenv.config();
@@ -129,6 +130,79 @@ app.post('/player-careers', async (req: Request, res: Response) => {
   try {
     const career = await playerCareerService.createPlayerCareer(req.body);
     res.status(201).json(career);
+  } catch (error: unknown) {
+    res.status(400).json({ error: getErrorMessage(error) });
+  }
+});
+
+// IPL Schedule endpoints
+app.get('/ipl-schedule', async (req: Request, res: Response) => {
+  try {
+    const schedules = await iplScheduleService.getAllSchedules();
+    res.json(schedules);
+  } catch (error: unknown) {
+    res.status(500).json({ error: getErrorMessage(error) });
+  }
+});
+
+app.get('/ipl-schedule/upcoming', async (req: Request, res: Response) => {
+  try {
+    const schedules = await iplScheduleService.getUpcomingSchedules();
+    res.json(schedules);
+  } catch (error: unknown) {
+    res.status(500).json({ error: getErrorMessage(error) });
+  }
+});
+
+app.get('/ipl-schedule/:id', async (req: Request, res: Response) => {
+  try {
+    const schedule = await iplScheduleService.getScheduleById(req.params.id);
+    if (!schedule) {
+      return res.status(404).json({ error: 'Schedule not found' });
+    }
+    res.json(schedule);
+  } catch (error: unknown) {
+    res.status(500).json({ error: getErrorMessage(error) });
+  }
+});
+
+app.post('/ipl-schedule', async (req: Request, res: Response) => {
+  try {
+    const schedule = await iplScheduleService.createSchedule(req.body);
+    res.status(201).json(schedule);
+  } catch (error: unknown) {
+    res.status(400).json({ error: getErrorMessage(error) });
+  }
+});
+
+app.put('/ipl-schedule/:id', async (req: Request, res: Response) => {
+  try {
+    const schedule = await iplScheduleService.updateSchedule(req.params.id, req.body);
+    if (!schedule) {
+      return res.status(404).json({ error: 'Schedule not found' });
+    }
+    res.json(schedule);
+  } catch (error: unknown) {
+    res.status(400).json({ error: getErrorMessage(error) });
+  }
+});
+
+app.patch('/ipl-schedule/:id', async (req: Request, res: Response) => {
+  try {
+    const schedule = await iplScheduleService.patchSchedule(req.params.id, req.body);
+    if (!schedule) {
+      return res.status(404).json({ error: 'Schedule not found' });
+    }
+    res.json(schedule);
+  } catch (error: unknown) {
+    res.status(400).json({ error: getErrorMessage(error) });
+  }
+});
+
+app.delete('/ipl-schedule/:id', async (req: Request, res: Response) => {
+  try {
+    const deleted = await iplScheduleService.deleteSchedule(req.params.id);
+    res.json({ success: deleted });
   } catch (error: unknown) {
     res.status(400).json({ error: getErrorMessage(error) });
   }

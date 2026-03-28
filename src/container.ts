@@ -4,18 +4,21 @@ import { TeamRepository } from './repositories/TeamRepository';
 import { LeagueRepository } from './repositories/LeagueRepository';
 import { PlayerCareerRepository } from './repositories/PlayerCareerRepository';
 import { GameRepository } from './repositories/GameRepository';
+import { IplScheduleRepository } from './repositories/IplScheduleRepository';
 
 import { PlayerService } from './services/PlayerService';
 import { TeamService } from './services/TeamService';
 import { LeagueService } from './services/LeagueService';
 import { PlayerCareerService } from './services/PlayerCareerService';
 import { GameService } from './services/GameService';
+import { IplScheduleService } from './services/IplScheduleService';
 
 const playerRepository = new PlayerRepository(db);
 const teamRepository = new TeamRepository(db);
 const leagueRepository = new LeagueRepository(db);
 const playerCareerRepository = new PlayerCareerRepository(db);
 const gameRepository = new GameRepository(db);
+const iplScheduleRepository = new IplScheduleRepository(db);
 
 export const playerService = new PlayerService(playerRepository);
 export const teamService = new TeamService(teamRepository);
@@ -27,6 +30,7 @@ export const playerCareerService = new PlayerCareerService(
   leagueRepository
 );
 export const gameService = new GameService(gameRepository, playerRepository, playerCareerRepository);
+export const iplScheduleService = new IplScheduleService(iplScheduleRepository);
 
 export {
   PlayerRepository,
@@ -34,9 +38,11 @@ export {
   LeagueRepository,
   PlayerCareerRepository,
   GameRepository,
+  IplScheduleRepository,
   PlayerService,
   TeamService,
   LeagueService,
   PlayerCareerService,
-  GameService
+  GameService,
+  IplScheduleService
 };
