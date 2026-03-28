@@ -17,12 +17,12 @@ const app: Application = express();
 const PORT = process.env.PORT || 3000;
 
 // CORS configuration - allow requests from localhost and production
-const allowedOrigins = [
+const allowedOrigins: string[] = [
   'http://localhost:5173',
   'http://localhost:5174',
   'http://localhost:3000',
   process.env.FRONTEND_URL,
-].filter(Boolean);
+].filter((origin): origin is string => Boolean(origin));
 
 app.use(cors({
   origin: function (origin, callback) {
